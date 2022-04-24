@@ -1,12 +1,15 @@
-package src.main.java.se.fredin.lefflerengine.object;
+package se.fredin.lefflerengine.object;
 
+import se.fredin.lefflerengine.screen.GamePanel;
 import src.main.java.se.fredin.lefflerengine.Controller;
-import src.main.java.se.fredin.lefflerengine.screen.GamePanel;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
 
-public class Player extends MovingGameObject {
+public class Player extends MoveableGameObject {
 
     GamePanel gp;
     Controller ctrl;
@@ -19,6 +22,11 @@ public class Player extends MovingGameObject {
         super(x, y, w, h, speed);
         this.gp = gp;
         this.ctrl = ctrl;
+        try {
+            this.spriteSheet = initSpriteSheet("hero.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -47,7 +55,7 @@ public class Player extends MovingGameObject {
         g2d.fillRect((int) x, (int) y, gp.tileSize, gp.tileSize);
     }
 
-    private BufferedImage initSpriteSheet(String filePath) {
-        return null;
+    private BufferedImage initSpriteSheet(String filePath) throws IOException {
+        return ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/" + filePath)));
     }
 }

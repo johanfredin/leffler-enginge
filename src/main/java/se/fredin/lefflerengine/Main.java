@@ -1,6 +1,6 @@
-package src.main.java.se.fredin.lefflerengine;
+package se.fredin.lefflerengine;
 
-import src.main.java.se.fredin.lefflerengine.screen.GamePanel;
+import se.fredin.lefflerengine.screen.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;

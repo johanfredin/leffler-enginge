@@ -1,4 +1,4 @@
-package src.main.java.se.fredin.lefflerengine.object;
+package se.fredin.lefflerengine.object;
 
 import java.awt.*;
 

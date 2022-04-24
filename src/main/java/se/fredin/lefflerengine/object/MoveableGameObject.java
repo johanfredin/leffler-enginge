@@ -1,6 +1,6 @@
-package src.main.java.se.fredin.lefflerengine.object;
+package se.fredin.lefflerengine.object;
 
-public abstract class MovingGameObject extends GameObject {
+public abstract class MoveableGameObject extends GameObject {
 
     public static final byte HEADING_NONE = 0;
     public static final byte HEADING_UP = 1;
@@ -12,7 +12,7 @@ public abstract class MovingGameObject extends GameObject {
 
     public float speed;
 
-    public MovingGameObject(float x, float y, int w, int h, float speed) {
+    public MoveableGameObject(float x, float y, int w, int h, float speed) {
         super(x, y, w, h);
         this.speed = speed;
     }

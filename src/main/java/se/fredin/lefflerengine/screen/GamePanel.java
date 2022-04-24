@@ -1,7 +1,7 @@
-package src.main.java.se.fredin.lefflerengine.screen;
+package se.fredin.lefflerengine.screen;
 
+import se.fredin.lefflerengine.object.Player;
 import src.main.java.se.fredin.lefflerengine.Controller;
-import src.main.java.se.fredin.lefflerengine.object.Player;
 
 import javax.swing.*;
 import java.awt.*;
