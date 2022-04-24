@@ -1,32 +1,30 @@
 package se.fredin.lefflerengine.object;
 
+import se.fredin.lefflerengine.asset.Animator;
+import se.fredin.lefflerengine.asset.SpriteSheet;
 import se.fredin.lefflerengine.screen.GamePanel;
 import src.main.java.se.fredin.lefflerengine.Controller;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 public class Player extends MoveableGameObject {
 
     GamePanel gp;
     Controller ctrl;
 
-    private BufferedImage spriteSheet;
-    private int u, v;  // x and y offsets within sprite sheet
+    final SpriteSheet spriteSheet;
+    final float ticksPerFrame;
 
+    final Animator animator;
 
-    public Player(float x, float y, int w, int h, float speed, GamePanel gp, Controller ctrl) {
+    public Player(float x, float y, int w, int h, float speed, GamePanel gp, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame) {
         super(x, y, w, h, speed);
         this.gp = gp;
         this.ctrl = ctrl;
-        try {
-            this.spriteSheet = initSpriteSheet("hero.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.spriteSheet = spriteSheet;
+        this.ticksPerFrame = ticksPerFrame;
+        this.animator = new Animator(spriteSheet, ticksPerFrame);
+        this.heading = HEADING_DOWN;
     }
 
     @Override
@@ -47,15 +45,16 @@ public class Player extends MoveableGameObject {
             heading = HEADING_RIGHT;
             x += speed;
         }
+
+        if (ctrl.up | ctrl.down | ctrl.left | ctrl.right) {
+            animator.tick();
+        }
+
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect((int) x, (int) y, gp.tileSize, gp.tileSize);
+        g2d.drawImage(animator.getCurrentFrame(heading), (int) x, (int) y, w, h, null);
     }
 
-    private BufferedImage initSpriteSheet(String filePath) throws IOException {
-        return ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/" + filePath)));
-    }
 }

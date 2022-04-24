@@ -1,10 +1,13 @@
 package se.fredin.lefflerengine.screen;
 
+import se.fredin.lefflerengine.asset.SpriteSheet;
 import se.fredin.lefflerengine.object.Player;
 import src.main.java.se.fredin.lefflerengine.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static se.fredin.lefflerengine.object.MoveableGameObject.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -42,7 +45,23 @@ public class GamePanel extends JPanel implements Runnable {
         this.screenWidth = nColsX * tileSize;
         this.screenHeight = nColsY * tileSize;
         this.controller = new Controller();
-        this.player = new Player(playerX, playerY, tileSize, tileSize, playerVelocity, this, controller);
+        this.player = new Player(
+                playerX,
+                playerY,
+                tileSize,
+                tileSize,
+                playerVelocity,
+                this,
+                controller,
+                new SpriteSheet(
+                        (byte) 3,
+                        (byte) 4,
+                        (byte) originalTileSize,
+                        (byte) originalTileSize,
+                        "hero.png",
+                        new byte[]{HEADING_DOWN, HEADING_LEFT, HEADING_RIGHT, HEADING_UP}
+                ),
+                10f);
 
         super.setPreferredSize(new Dimension(screenWidth, screenHeight));
         super.setBackground(bgColor);
