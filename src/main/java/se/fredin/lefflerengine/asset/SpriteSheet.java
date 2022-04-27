@@ -11,7 +11,7 @@ public class SpriteSheet {
 
     public final byte nColsX, nColsY, colW, colH;
 
-    private Map<Byte, BufferedImage[]> sheetMap;
+    private final Map<Byte, BufferedImage[]> sheetMap;
 
     public SpriteSheet(byte nColsX, byte nColsY, byte colW, byte colH, String source, byte[] keys) {
         this.nColsX = nColsX;

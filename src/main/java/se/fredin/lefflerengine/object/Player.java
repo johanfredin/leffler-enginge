@@ -2,12 +2,13 @@ package se.fredin.lefflerengine.object;
 
 import se.fredin.lefflerengine.asset.Animator;
 import se.fredin.lefflerengine.asset.SpriteSheet;
+import se.fredin.lefflerengine.constants.Heading;
 import se.fredin.lefflerengine.screen.GamePanel;
 import src.main.java.se.fredin.lefflerengine.Controller;
 
 import java.awt.*;
 
-public class Player extends MoveableGameObject {
+public class Player extends GameObject {
 
     GamePanel gp;
     Controller ctrl;
@@ -18,31 +19,30 @@ public class Player extends MoveableGameObject {
     final Animator animator;
 
     public Player(float x, float y, int w, int h, float speed, GamePanel gp, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame) {
-        super(x, y, w, h, speed);
+        super(x, y, w, h, Heading.DOWN, speed);
         this.gp = gp;
         this.ctrl = ctrl;
         this.spriteSheet = spriteSheet;
         this.ticksPerFrame = ticksPerFrame;
         this.animator = new Animator(spriteSheet, ticksPerFrame);
-        this.heading = HEADING_DOWN;
     }
 
     @Override
     public void tick(float deltaTime) {
         if (ctrl.up) {
-            heading = HEADING_UP;
+            heading = Heading.UP;
             y -= speed;
         }
         if (ctrl.down) {
-            heading = HEADING_DOWN;
+            heading = Heading.DOWN;
             y += speed;
         }
         if (ctrl.left) {
-            heading = HEADING_LEFT;
+            heading = Heading.LEFT;
             x -= speed;
         }
         if (ctrl.right) {
-            heading = HEADING_RIGHT;
+            heading = Heading.RIGHT;
             x += speed;
         }
 

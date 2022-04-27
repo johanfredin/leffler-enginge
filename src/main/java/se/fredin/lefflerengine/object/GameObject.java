@@ -1,20 +1,26 @@
 package se.fredin.lefflerengine.object;
 
+import se.fredin.lefflerengine.Entity;
+import se.fredin.lefflerengine.constants.Heading;
+
 import java.awt.*;
 
-public abstract class GameObject {
+public abstract class GameObject implements Entity {
 
-    public float x, y, speed;
+    public float x;
+    public float y;
     public int w, h;
 
-    public GameObject(float x, float y, int w, int h) {
+    public byte heading = Heading.NONE;
+
+    public float speed;
+
+    public GameObject(float x, float y, int w, int h, byte heading, float speed) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        this.heading = heading;
+        this.speed = speed;
     }
-
-    public abstract void tick(float deltaTime);
-
-    public abstract void draw(Graphics2D g2d);
 }

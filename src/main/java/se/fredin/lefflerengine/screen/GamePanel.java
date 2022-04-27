@@ -1,13 +1,15 @@
 package se.fredin.lefflerengine.screen;
 
 import se.fredin.lefflerengine.asset.SpriteSheet;
+import se.fredin.lefflerengine.constants.Heading;
+import se.fredin.lefflerengine.map.TileMap;
 import se.fredin.lefflerengine.object.Player;
 import src.main.java.se.fredin.lefflerengine.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-
-import static se.fredin.lefflerengine.object.MoveableGameObject.*;
+import java.util.Map;
+import java.util.Set;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -29,12 +31,8 @@ public class GamePanel extends JPanel implements Runnable {
     boolean running;
     final Controller controller;
 
-    // Default player pos/speed
-    float playerX = 100;
-    float playerY = 100;
-    float playerVelocity = 4;
-
     Player player;
+    TileMap tileMap;
 
     public GamePanel(int originalTileSize, int scale, int nColsX, int nColsY, Color bgColor) {
         this.originalTileSize = originalTileSize;
@@ -46,11 +44,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.screenHeight = nColsY * tileSize;
         this.controller = new Controller();
         this.player = new Player(
-                playerX,
-                playerY,
+                100,
+                100,
                 tileSize,
                 tileSize,
-                playerVelocity,
+                4f,
                 this,
                 controller,
                 new SpriteSheet(
@@ -59,9 +57,19 @@ public class GamePanel extends JPanel implements Runnable {
                         (byte) originalTileSize,
                         (byte) originalTileSize,
                         "hero.png",
-                        new byte[]{HEADING_DOWN, HEADING_LEFT, HEADING_RIGHT, HEADING_UP}
+                        new byte[]{Heading.DOWN, Heading.LEFT, Heading.RIGHT, Heading.UP}
                 ),
                 10f);
+
+        this.tileMap = new TileMap(
+                "level_01.txt",
+                Map.of(
+                        0, "grass.png",
+                        1, "tree.png",
+                        2, "water.png"
+                ),
+                this
+        );
 
         super.setPreferredSize(new Dimension(screenWidth, screenHeight));
         super.setBackground(bgColor);
@@ -117,6 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         var g2d = (Graphics2D) g;
+        tileMap.draw(g2d);
         player.draw(g2d);
         g2d.dispose();
     }
