@@ -7,33 +7,41 @@ import se.fredin.lefflerengine.util.LefflerUtils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class TileMap implements Entity {
 
-    private BufferedImage[][] tiles;
+    private int[][] tilesIndex;
+    private BufferedImage[] tileImages;
     private final GamePanel gp;
 
-    public TileMap(String levelFileName, Map<Integer, String> tileset, GamePanel gp) {
+    private final int nCols, nRows;
+
+    public TileMap(String levelFileName, Map<Integer, String> tileset, GamePanel gp, int nCols, int nRows) {
         this.gp = gp;
+        this.nCols = nCols;
+        this.nRows = nRows;
         initTiles(levelFileName, tileset);
     }
 
     private void initTiles(String levelFileName, Map<Integer, String> tileset) {
         // Load img dict
-        Map<Integer, BufferedImage> tilesDict = new HashMap<>();
-        tileset.forEach((idx, imgName) -> tilesDict.put(idx, LefflerUtils.readImg("/tiles/" + imgName)));
+        tileImages = new BufferedImage[tileset.size()];
+        tileset.forEach((idx, imgName) -> tileImages[idx] = LefflerUtils.readImg("/tiles/" + imgName));
 
         // Parse map file
-        tiles = new BufferedImage[12][16];
+        tilesIndex = new int[nRows][nCols];
         try (var sc = new Scanner(LefflerUtils.readFile("/maps/" + levelFileName))) {
             int y = 0;
             while (sc.hasNextLine()) {
                 var row = sc.nextLine().split("\t");
+                if (row.length != nCols) {
+                    throw new RuntimeException("Amount of cols should be=" + nCols + ". Was=" + row.length);
+                }
+
                 for (int x = 0; x < row.length; x++) {
-                    tiles[y][x] = tilesDict.get(Integer.parseInt(row[x]));
+                    tilesIndex[y][x] = Integer.parseInt(row[x]);
                 }
                 y++;
             }
@@ -49,9 +57,9 @@ public class TileMap implements Entity {
 
     @Override
     public void draw(Graphics2D g2d) {
-        for (int y = 0; y < tiles.length; y++) {
-            for(int x = 0; x < tiles[y].length; x++) {
-                g2d.drawImage(tiles[y][x], gp.tileSize * x, gp.tileSize * y, gp.tileSize, gp.tileSize, null);
+        for (int y = 0; y < nRows; y++) {
+            for(int x = 0; x < nCols; x++) {
+                g2d.drawImage(tileImages[tilesIndex[y][x]], gp.tileSize * x, gp.tileSize * y, gp.tileSize, gp.tileSize, null);
             }
         }
     }

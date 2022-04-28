@@ -9,7 +9,6 @@ import src.main.java.se.fredin.lefflerengine.Controller;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
-import java.util.Set;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -68,7 +67,9 @@ public class GamePanel extends JPanel implements Runnable {
                         1, "tree.png",
                         2, "water.png"
                 ),
-                this
+                this,
+                16,
+                12
         );
 
         super.setPreferredSize(new Dimension(screenWidth, screenHeight));
