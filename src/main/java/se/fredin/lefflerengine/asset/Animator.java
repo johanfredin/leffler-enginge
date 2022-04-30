@@ -7,7 +7,6 @@ public class Animator {
     private final SpriteSheet spriteSheet;
     private final float ticksPerFrame;
     private int counter;
-
     private byte currCol = 0;
 
     public Animator(SpriteSheet spriteSheet, float ticksPerFrame) {
@@ -16,12 +15,9 @@ public class Animator {
     }
 
     public void tick() {
-        counter++;
-        if (counter >= ticksPerFrame) {
+        if (counter++ >= ticksPerFrame) {
             // Time to update
-            if (currCol < spriteSheet.nColsX - 1) {
-                currCol++;
-            } else {
+            if (++currCol >= spriteSheet.nColsX) {
                 currCol = 0;
             }
             counter = 0;

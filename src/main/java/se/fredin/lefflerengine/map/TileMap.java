@@ -58,8 +58,19 @@ public class TileMap implements Entity {
     @Override
     public void draw(Graphics2D g2d) {
         for (int y = 0; y < nRows; y++) {
-            for(int x = 0; x < nCols; x++) {
-                g2d.drawImage(tileImages[tilesIndex[y][x]], gp.tileSize * x, gp.tileSize * y, gp.tileSize, gp.tileSize, null);
+            for (int x = 0; x < nCols; x++) {
+                int worldX = gp.tileSize * x;
+                int worldY = gp.tileSize * y;
+                int screenX = (int) (worldX - gp.player.worldX + gp.player.screenX);
+                int screenY = (int) (worldY - gp.player.worldY + gp.player.screenY);
+
+                if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+                        worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                        worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                        worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+
+                    g2d.drawImage(tileImages[tilesIndex[y][x]], screenX, screenY, gp.tileSize, gp.tileSize, null);
+                }
             }
         }
     }

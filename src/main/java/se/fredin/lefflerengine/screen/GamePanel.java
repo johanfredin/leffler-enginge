@@ -15,6 +15,10 @@ public class GamePanel extends JPanel implements Runnable {
     static final int FPS = 60;
     static final int ONE_NANO = 1000000000;
 
+    public final int tileSize;
+    public final int screenWidth;
+    public final int screenHeight;
+
     private static float deltaTime;
 
     final int originalTileSize;
@@ -22,15 +26,11 @@ public class GamePanel extends JPanel implements Runnable {
     final int nColsX;
     final int nColsY;
 
-    public final int tileSize;
-    final int screenWidth;
-    final int screenHeight;
-
     Thread gameThread;
     boolean running;
     final Controller controller;
 
-    Player player;
+    public final Player player;
     TileMap tileMap;
 
     public GamePanel(int originalTileSize, int scale, int nColsX, int nColsY, Color bgColor) {
@@ -61,15 +61,16 @@ public class GamePanel extends JPanel implements Runnable {
                 10f);
 
         this.tileMap = new TileMap(
-                "level_01.txt",
+                "world_01.txt",
                 Map.of(
                         0, "grass.png",
                         1, "tree.png",
-                        2, "water.png"
+                        2, "water.png",
+                        3, "dirt.png"
                 ),
                 this,
-                16,
-                12
+                32,
+                24
         );
 
         super.setPreferredSize(new Dimension(screenWidth, screenHeight));
