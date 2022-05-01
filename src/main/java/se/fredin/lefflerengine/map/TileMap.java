@@ -1,6 +1,6 @@
 package se.fredin.lefflerengine.map;
 
-import se.fredin.lefflerengine.Game;
+import se.fredin.lefflerengine.display.Camera;
 import se.fredin.lefflerengine.util.Utils;
 
 import java.awt.*;
@@ -13,21 +13,22 @@ public class TileMap extends LefflerMap {
 
     private int[][] tilesIndex;
     private BufferedImage[] tileImages;
-    private final Game game;
+    private Camera camera;
 
     private final int nCols, nRows;
 
-    private final byte originalTileSize;
     private final int scaledTileSize;
 
-    public TileMap(String levelFileName, Map<Integer, String> tileset, Game game, int nCols, int nRows, byte scale, byte tileSize) {
+    public TileMap(String levelFileName, Map<Integer, String> tileset, int nCols, int nRows, byte scale, byte tileSize) {
         super((tileSize * nCols) * scale, (tileSize * nRows) * scale, scale, levelFileName);
-        this.originalTileSize = tileSize;
         this.scaledTileSize = tileSize * scale;
-        this.game = game;
         this.nCols = nCols;
         this.nRows = nRows;
         initTiles(levelFileName, tileset);
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 
     private void initTiles(String levelFileName, Map<Integer, String> tileset) {
@@ -62,13 +63,13 @@ public class TileMap extends LefflerMap {
 
     @Override
     public void draw(Graphics2D g2d) {
-//        for (int y = 0; y < nRows; y++) {
-//            for (int x = 0; x < nCols; x++) {
-//                int camX = (int) ((x * scaledTileSize) - gp.camera.x);
-//                int camY = (int) ((y * scaledTileSize) - gp.camera.y);
-//                g2d.drawImage(tileImages[tilesIndex[y][x]], camX, camY, scaledTileSize, scaledTileSize, null);
-//            }
-//        }
+        for (int y = 0; y < nRows; y++) {
+            for (int x = 0; x < nCols; x++) {
+                int camX = (int) ((x * scaledTileSize) - camera.x);
+                int camY = (int) ((y * scaledTileSize) - camera.y);
+                g2d.drawImage(tileImages[tilesIndex[y][x]], camX, camY, scaledTileSize, scaledTileSize, null);
+            }
+        }
     }
 
 }

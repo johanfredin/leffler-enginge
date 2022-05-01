@@ -21,15 +21,12 @@ public class Game implements GameEntity {
     final Mode mode;
 
     public final Player player;
-//    public final Camera camera;
     TileMap tileMap;
 
-    private Canvas canvas;
-
-    public Game(Leffler leffler, Mode mode) {
+    public Game(Leffler leffler, Controller controller, Mode mode) {
         this.mode = mode;
         this.leffler = leffler;
-        this.controller = new Controller();
+        this.controller = controller;
         this.tileMap = new TileMap(
                 "world_01.txt",
                 Map.of(
@@ -38,7 +35,6 @@ public class Game implements GameEntity {
                         2, "water.png",
                         3, "dirt.png"
                 ),
-                this,
                 32,
                 24,
                 SCALE,
@@ -50,8 +46,7 @@ public class Game implements GameEntity {
                 16 * SCALE,
                 16 * SCALE,
                 6f,
-                camera,
-                controller,
+                this.controller,
                 new SpriteSheet(
                         (byte) 3,
                         (byte) 4,
@@ -62,16 +57,20 @@ public class Game implements GameEntity {
                 ),
                 10f);
 
-        camera = new Camera(leffler.width, leffler.height, player);
+        this.camera = new Camera(leffler.width, leffler.height, tileMap.w, tileMap.h, player);
+        this.tileMap.setCamera(camera);
+        this.player.setCamera(camera);
     }
 
     @Override
     public void tick(float deltaTime) {
-
+        camera.tick(deltaTime);
+        player.tick(deltaTime);
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-
+        tileMap.draw(g2d);
+        player.draw(g2d);
     }
 }

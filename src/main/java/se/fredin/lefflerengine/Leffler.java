@@ -32,7 +32,8 @@ public class Leffler extends JFrame implements Runnable {
         this.height = height;
         this.bgColor = bgColor;
         this.mode = mode;
-        this.game = new Game(this, mode);
+        Controller controller = new Controller();
+        this.game = new Game(this, controller, mode);
 
         super.setTitle("Leffler Engine");
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -49,6 +50,8 @@ public class Leffler extends JFrame implements Runnable {
 
         super.setLocationRelativeTo(null);
         super.setVisible(true);
+
+        super.addKeyListener(controller);
     }
 
     public void start() {
@@ -91,7 +94,10 @@ public class Leffler extends JFrame implements Runnable {
         Graphics2D g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, width, height);
+
+        // Draw game content
         game.draw(g2d);
+
         g2d.dispose();
         bufferStrategy.show();
     }

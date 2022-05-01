@@ -10,19 +10,22 @@ import java.awt.*;
 
 public class Player extends GameObject {
 
-    Controller ctrl;
+    private final Controller ctrl;
+    private Camera camera;
+    private byte heading = Heading.UP;
 
-    final SpriteSheet spriteSheet;
     final float ticksPerFrame;
-
     final Animator animator;
 
-    public Player(float x, float y, int w, int h, float speed, Camera camera, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame) {
-        super(x, y, w, h, Heading.DOWN, speed, camera);
+    public Player(float x, float y, int w, int h, float speed, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame) {
+        super(x, y, w, h, speed);
         this.ctrl = ctrl;
-        this.spriteSheet = spriteSheet;
         this.ticksPerFrame = ticksPerFrame;
         this.animator = new Animator(spriteSheet, ticksPerFrame);
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class Player extends GameObject {
 
     @Override
     public void draw(Graphics2D g2d) {
-//        g2d.drawImage(animator.getCurrentFrame(heading), (int)(x - gp.camera.x), (int)(y - gp.camera.y), w, h, null);
+        g2d.drawImage(animator.getCurrentFrame(heading), (int)(x - camera.x), (int)(y - camera.y), w, h, null);
     }
 
 }
