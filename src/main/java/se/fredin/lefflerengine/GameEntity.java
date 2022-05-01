@@ -3,7 +3,7 @@ package se.fredin.lefflerengine;
 import java.awt.*;
 import java.io.Serializable;
 
-public interface Entity extends Serializable {
+public interface GameEntity extends Serializable {
 
     void tick(float deltaTime);
 

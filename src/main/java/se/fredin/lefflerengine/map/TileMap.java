@@ -1,8 +1,7 @@
 package se.fredin.lefflerengine.map;
 
-import se.fredin.lefflerengine.Entity;
-import se.fredin.lefflerengine.display.GamePanel;
-import se.fredin.lefflerengine.util.LefflerUtils;
+import se.fredin.lefflerengine.Game;
+import se.fredin.lefflerengine.util.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,16 +9,22 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TileMap implements Entity {
+public class TileMap extends LefflerMap {
 
     private int[][] tilesIndex;
     private BufferedImage[] tileImages;
-    private final GamePanel gp;
+    private final Game game;
 
     private final int nCols, nRows;
 
-    public TileMap(String levelFileName, Map<Integer, String> tileset, GamePanel gp, int nCols, int nRows) {
-        this.gp = gp;
+    private final byte originalTileSize;
+    private final int scaledTileSize;
+
+    public TileMap(String levelFileName, Map<Integer, String> tileset, Game game, int nCols, int nRows, byte scale, byte tileSize) {
+        super((tileSize * nCols) * scale, (tileSize * nRows) * scale, scale, levelFileName);
+        this.originalTileSize = tileSize;
+        this.scaledTileSize = tileSize * scale;
+        this.game = game;
         this.nCols = nCols;
         this.nRows = nRows;
         initTiles(levelFileName, tileset);
@@ -28,11 +33,11 @@ public class TileMap implements Entity {
     private void initTiles(String levelFileName, Map<Integer, String> tileset) {
         // Load img dict
         tileImages = new BufferedImage[tileset.size()];
-        tileset.forEach((idx, imgName) -> tileImages[idx] = LefflerUtils.readImg("/tiles/" + imgName));
+        tileset.forEach((idx, imgName) -> tileImages[idx] = Utils.readImg("/tiles/" + imgName));
 
         // Parse map file
         tilesIndex = new int[nRows][nCols];
-        try (var sc = new Scanner(LefflerUtils.readFile("/maps/" + levelFileName))) {
+        try (var sc = new Scanner(Utils.readFile("/maps/" + levelFileName))) {
             int y = 0;
             while (sc.hasNextLine()) {
                 var row = sc.nextLine().split("\t");
@@ -57,21 +62,13 @@ public class TileMap implements Entity {
 
     @Override
     public void draw(Graphics2D g2d) {
-        for (int y = 0; y < nRows; y++) {
-            for (int x = 0; x < nCols; x++) {
-                int camX = (int) ((x * gp.tileSize) - gp.camera.x);
-                int camY = (int) ((y * gp.tileSize) - gp.camera.y);
-                g2d.drawImage(tileImages[tilesIndex[y][x]], camX, camY, gp.tileSize, gp.tileSize, null);
-            }
-        }
-    }
-
-    public int getWidth() {
-        return nCols * gp.tileSize;
-    }
-
-    public int getHeight() {
-        return nRows * gp.tileSize;
+//        for (int y = 0; y < nRows; y++) {
+//            for (int x = 0; x < nCols; x++) {
+//                int camX = (int) ((x * scaledTileSize) - gp.camera.x);
+//                int camY = (int) ((y * scaledTileSize) - gp.camera.y);
+//                g2d.drawImage(tileImages[tilesIndex[y][x]], camX, camY, scaledTileSize, scaledTileSize, null);
+//            }
+//        }
     }
 
 }
