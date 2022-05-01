@@ -1,8 +1,9 @@
 package se.fredin.lefflerengine;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public interface Entity {
+public interface Entity extends Serializable {
 
     void tick(float deltaTime);
 

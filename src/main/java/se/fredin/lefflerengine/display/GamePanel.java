@@ -1,4 +1,4 @@
-package se.fredin.lefflerengine.screen;
+package se.fredin.lefflerengine.display;
 
 import se.fredin.lefflerengine.asset.SpriteSheet;
 import se.fredin.lefflerengine.constants.Heading;
@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     final Controller controller;
 
     public final Player player;
+    public final Camera camera;
     TileMap tileMap;
 
     public GamePanel(int originalTileSize, int scale, int nColsX, int nColsY, Color bgColor) {
@@ -43,11 +44,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.screenHeight = nColsY * tileSize;
         this.controller = new Controller();
         this.player = new Player(
-                100,
-                100,
+                24,
+                24,
                 tileSize,
                 tileSize,
-                4f,
+                8f,
                 this,
                 controller,
                 new SpriteSheet(
@@ -73,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
                 24
         );
 
+        this.camera = new Camera(this, player);
         super.setPreferredSize(new Dimension(screenWidth, screenHeight));
         super.setBackground(bgColor);
         super.setDoubleBuffered(true);
@@ -120,6 +122,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void tick() {
+        camera.tick(deltaTime);
         player.tick(deltaTime);
     }
 

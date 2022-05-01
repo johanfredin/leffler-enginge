@@ -1,7 +1,7 @@
 package se.fredin.lefflerengine.map;
 
 import se.fredin.lefflerengine.Entity;
-import se.fredin.lefflerengine.screen.GamePanel;
+import se.fredin.lefflerengine.display.GamePanel;
 import se.fredin.lefflerengine.util.LefflerUtils;
 
 import java.awt.*;
@@ -59,19 +59,19 @@ public class TileMap implements Entity {
     public void draw(Graphics2D g2d) {
         for (int y = 0; y < nRows; y++) {
             for (int x = 0; x < nCols; x++) {
-                int worldX = gp.tileSize * x;
-                int worldY = gp.tileSize * y;
-                int screenX = (int) (worldX - gp.player.worldX + gp.player.screenX);
-                int screenY = (int) (worldY - gp.player.worldY + gp.player.screenY);
-
-                if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                        worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                        worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                        worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
-
-                    g2d.drawImage(tileImages[tilesIndex[y][x]], screenX, screenY, gp.tileSize, gp.tileSize, null);
-                }
+                int camX = (int) ((x * gp.tileSize) - gp.camera.x);
+                int camY = (int) ((y * gp.tileSize) - gp.camera.y);
+                g2d.drawImage(tileImages[tilesIndex[y][x]], camX, camY, gp.tileSize, gp.tileSize, null);
             }
         }
     }
+
+    public int getWidth() {
+        return nCols * gp.tileSize;
+    }
+
+    public int getHeight() {
+        return nRows * gp.tileSize;
+    }
+
 }

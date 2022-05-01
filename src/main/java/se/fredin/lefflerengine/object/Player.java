@@ -3,7 +3,7 @@ package se.fredin.lefflerengine.object;
 import se.fredin.lefflerengine.asset.Animator;
 import se.fredin.lefflerengine.asset.SpriteSheet;
 import se.fredin.lefflerengine.constants.Heading;
-import se.fredin.lefflerengine.screen.GamePanel;
+import se.fredin.lefflerengine.display.GamePanel;
 import src.main.java.se.fredin.lefflerengine.Controller;
 
 import java.awt.*;
@@ -16,8 +16,6 @@ public class Player extends GameObject {
     final SpriteSheet spriteSheet;
     final float ticksPerFrame;
 
-    public float screenX, screenY;
-
     final Animator animator;
 
     public Player(float x, float y, int w, int h, float speed, GamePanel gp, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame) {
@@ -27,39 +25,35 @@ public class Player extends GameObject {
         this.spriteSheet = spriteSheet;
         this.ticksPerFrame = ticksPerFrame;
         this.animator = new Animator(spriteSheet, ticksPerFrame);
-
-        this.screenX = (gp.screenWidth / 2f) - (w / 2f);
-        this.screenY = (gp.screenHeight / 2f) - (h / 2f);
     }
 
     @Override
     public void tick(float deltaTime) {
-        if (ctrl.up) {
-            heading = Heading.UP;
-            worldY -= speed;
-        }
-        if (ctrl.down) {
-            heading = Heading.DOWN;
-            worldY += speed;
-        }
-        if (ctrl.left) {
-            heading = Heading.LEFT;
-            worldX -= speed;
-        }
-        if (ctrl.right) {
-            heading = Heading.RIGHT;
-            worldX += speed;
-        }
-
-        if (ctrl.up | ctrl.down | ctrl.left | ctrl.right) {
+        var moving = ctrl.up | ctrl.down | ctrl.left | ctrl.right;
+        if (moving) {
+            if (ctrl.up) {
+                heading = Heading.UP;
+                y -= speed;
+            }
+            if (ctrl.down) {
+                heading = Heading.DOWN;
+                y += speed;
+            }
+            if (ctrl.left) {
+                heading = Heading.LEFT;
+                x -= speed;
+            }
+            if (ctrl.right) {
+                heading = Heading.RIGHT;
+                x += speed;
+            }
             animator.tick();
         }
-
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawImage(animator.getCurrentFrame(heading), (int) screenX, (int) screenY, w, h, null);
+        g2d.drawImage(animator.getCurrentFrame(heading), (int)(x - gp.camera.x), (int)(y - gp.camera.y), w, h, null);
     }
 
 }

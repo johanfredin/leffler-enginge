@@ -1,6 +1,6 @@
 package se.fredin.lefflerengine;
 
-import se.fredin.lefflerengine.screen.GamePanel;
+import se.fredin.lefflerengine.display.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
