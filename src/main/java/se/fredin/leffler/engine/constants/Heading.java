@@ -1,4 +1,4 @@
-package se.fredin.lefflerengine.constants;
+package se.fredin.leffler.engine.constants;
 
 public class Heading {
 

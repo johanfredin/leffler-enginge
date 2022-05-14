@@ -1,4 +1,4 @@
-package se.fredin.lefflerengine.util;
+package se.fredin.leffler.engine.util;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

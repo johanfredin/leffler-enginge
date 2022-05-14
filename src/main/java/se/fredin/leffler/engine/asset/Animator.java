@@ -1,4 +1,4 @@
-package se.fredin.lefflerengine.asset;
+package se.fredin.leffler.engine.asset;
 
 import java.awt.image.BufferedImage;
 

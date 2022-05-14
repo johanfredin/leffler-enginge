@@ -1,7 +1,7 @@
-package se.fredin.lefflerengine.display;
+package se.fredin.leffler.engine.display;
 
-import se.fredin.lefflerengine.GameEntity;
-import se.fredin.lefflerengine.object.GameObject;
+import se.fredin.leffler.engine.core.GameEntity;
+import se.fredin.leffler.engine.object.GameObjectBase;
 
 import java.awt.*;
 import java.util.Optional;
@@ -13,9 +13,9 @@ public class Camera implements GameEntity {
     public float x = 0, y = 0;
     public int viewPortWidth, viewPortHeight;
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private final Optional<GameObject> objectOfInterest;
+    private final Optional<GameObjectBase> objectOfInterest;
 
-    public Camera(int viewPortWidth, int viewPortHeight, int mapWidth, int mapHeight, GameObject objectOfInterest) {
+    public Camera(int viewPortWidth, int viewPortHeight, int mapWidth, int mapHeight, GameObjectBase objectOfInterest) {
         this.viewPortWidth = viewPortWidth;
         this.viewPortHeight = viewPortHeight;
         this.mapWidth = mapWidth;

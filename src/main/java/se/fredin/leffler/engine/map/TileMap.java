@@ -1,7 +1,7 @@
-package se.fredin.lefflerengine.map;
+package se.fredin.leffler.engine.map;
 
-import se.fredin.lefflerengine.display.Camera;
-import se.fredin.lefflerengine.util.Utils;
+import se.fredin.leffler.engine.display.Camera;
+import se.fredin.leffler.engine.util.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,4 @@
-package se.fredin.lefflerengine;
+package se.fredin.leffler.engine.io;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

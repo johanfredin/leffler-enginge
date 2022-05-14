@@ -1,6 +1,6 @@
-package se.fredin.lefflerengine.map;
+package se.fredin.leffler.engine.map;
 
-import se.fredin.lefflerengine.GameEntity;
+import se.fredin.leffler.engine.core.GameEntity;
 
 public abstract class LefflerMap implements GameEntity {
 

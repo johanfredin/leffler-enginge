@@ -1,6 +1,8 @@
-package se.fredin.lefflerengine;
+package se.fredin.leffler.engine.display;
 
-import se.fredin.lefflerengine.constants.Mode;
+import se.fredin.leffler.engine.constants.Mode;
+import se.fredin.leffler.engine.core.GameBase;
+import se.fredin.leffler.engine.io.Controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +10,7 @@ import java.awt.*;
 /**
  * Main game loop
  */
-public class Leffler extends JFrame implements Runnable {
+public abstract class LefflerEngine extends JFrame implements Runnable {
 
     // Render loop props
     public static final float DESIRED_FPS = 1.0f / 60f;
@@ -21,21 +23,22 @@ public class Leffler extends JFrame implements Runnable {
     public final int height;
     public final Color bgColor;
 
-    private final Game game;
+    private final GameBase game;
     private final Canvas canvas;
-    private final Mode mode;
+
+    protected final Mode mode;
+    protected final Controller controller;
 
     private boolean running;
 
-    public Leffler(int width, int height, Color bgColor, Mode mode) {
+    public LefflerEngine(int width, int height, Color bgColor, Mode mode) {
         this.width = width;
         this.height = height;
         this.bgColor = bgColor;
         this.mode = mode;
-        Controller controller = new Controller();
-        this.game = new Game(this, controller, mode);
+        this.controller = getController();
 
-        super.setTitle("Leffler Engine");
+        super.setTitle(getGameTitle());
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         super.setResizable(false);
 
@@ -46,13 +49,24 @@ public class Leffler extends JFrame implements Runnable {
         super.add(canvas);
         super.pack();
 
-        canvas.createBufferStrategy(3);
+        canvas.createBufferStrategy(getNumBuffers());
 
         super.setLocationRelativeTo(null);
         super.setVisible(true);
 
-        super.addKeyListener(controller);
+        super.addKeyListener(this.controller);
+        this.game = getGame();
     }
+
+    public String getGameTitle() {
+        return this.getClass().getSimpleName();
+    }
+
+    public abstract GameBase getGame();
+
+    public abstract Controller getController();
+
+    public abstract int getNumBuffers();
 
     public void start() {
         Thread gameThread = new Thread(this);
@@ -92,7 +106,7 @@ public class Leffler extends JFrame implements Runnable {
     public void draw() {
         var bufferStrategy = canvas.getBufferStrategy();
         Graphics2D g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
-        g2d.setColor(Color.BLACK);
+        g2d.setColor(bgColor);
         g2d.fillRect(0, 0, width, height);
 
         // Draw game content
