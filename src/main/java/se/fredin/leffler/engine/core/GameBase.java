@@ -1,6 +1,6 @@
 package se.fredin.leffler.engine.core;
 
-import se.fredin.leffler.engine.object.PlayerBase;
+import se.fredin.leffler.engine.object.Player;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -9,7 +9,7 @@ public interface GameBase extends Serializable {
 
     byte SCALE = 3;
 
-    PlayerBase getPlayer();
+    Player getPlayer();
 
     void tick(float deltaTime);
 

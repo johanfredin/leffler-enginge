@@ -1,12 +1,12 @@
 package se.fredin.leffler.engine.display;
 
-import se.fredin.leffler.engine.core.GameEntity;
+import se.fredin.leffler.engine.core.Rendereable;
 import se.fredin.leffler.engine.object.GameObjectBase;
 
 import java.awt.*;
 import java.util.Optional;
 
-public class Camera implements GameEntity {
+public class Camera implements Rendereable {
 
     private final int mapWidth;
     private final int mapHeight;

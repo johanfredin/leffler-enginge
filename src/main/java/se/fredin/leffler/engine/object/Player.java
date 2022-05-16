@@ -8,7 +8,7 @@ import se.fredin.leffler.engine.display.Camera;
 
 import java.awt.*;
 
-public class Player extends PlayerBase {
+public class Player extends GameObjectBase {
 
     private final Controller ctrl;
     private Camera camera;
@@ -18,7 +18,7 @@ public class Player extends PlayerBase {
     final Animator animator;
 
     public Player(float x, float y, int w, int h, float speed, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame) {
-        super(x, y, w, h, speed, ctrl, Color.RED);
+        super(x, y, w, h, speed, 2, 2);
         this.ctrl = ctrl;
         this.ticksPerFrame = ticksPerFrame;
         this.animator = new Animator(spriteSheet, ticksPerFrame);
@@ -35,18 +35,22 @@ public class Player extends PlayerBase {
             if (ctrl.up) {
                 heading = Heading.UP;
                 y -= speed;
+                bounds.y -= speed;
             }
             if (ctrl.down) {
                 heading = Heading.DOWN;
                 y += speed;
+                bounds.y += speed;
             }
             if (ctrl.left) {
                 heading = Heading.LEFT;
                 x -= speed;
+                bounds.x -= speed;
             }
             if (ctrl.right) {
                 heading = Heading.RIGHT;
                 x += speed;
+                bounds.x += speed;
             }
             animator.tick();
         }

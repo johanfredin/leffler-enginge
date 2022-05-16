@@ -1,5 +1,6 @@
 package se.fredin.leffler.examples;
 
+import se.fredin.leffler.engine.core.GameBase;
 import se.fredin.leffler.engine.io.Controller;
 import se.fredin.leffler.engine.core.TileMapGame;
 import se.fredin.leffler.engine.display.LefflerEngine;
@@ -8,6 +9,8 @@ import se.fredin.leffler.engine.map.TileMap;
 
 import java.awt.*;
 import java.util.Map;
+
+import static se.fredin.leffler.engine.core.GameBase.SCALE;
 
 public class TileMapGameEx extends LefflerEngine {
 
@@ -21,7 +24,7 @@ public class TileMapGameEx extends LefflerEngine {
     }
 
     @Override
-    public TileMapGame getGame() {
+    public GameBase getGame() {
         return new TileMapGame(width, height, new TileMap(
                 "world_01.txt",
                 Map.of(
@@ -32,7 +35,7 @@ public class TileMapGameEx extends LefflerEngine {
                 ),
                 32,
                 24,
-                TileMapGame.SCALE,
+                SCALE,
                 (byte) 16
         ) ,controller);
     }
