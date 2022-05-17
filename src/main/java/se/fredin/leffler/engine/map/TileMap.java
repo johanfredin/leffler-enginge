@@ -1,6 +1,6 @@
 package se.fredin.leffler.engine.map;
 
-import se.fredin.leffler.engine.display.Camera;
+import se.fredin.leffler.engine.geometry.Camera;
 import se.fredin.leffler.engine.util.Utils;
 
 import java.awt.*;

@@ -9,8 +9,8 @@ import java.awt.*;
 public class Main {
 
     public static void main(String[] args) {
-//        new TileMapGameEx(800, 600, Color.BLACK, Mode.DEBUG).start();
-        new AABBEx(800, 600, Color.BLACK, Mode.DEBUG).start();
+        new TileMapGameEx(800, 600, Color.BLACK, Mode.DEBUG).start();
+//        new AABBEx(800, 600, Color.BLACK, Mode.DEBUG).start();
     }
 
 }

@@ -2,7 +2,8 @@ package se.fredin.leffler.engine.core;
 
 import se.fredin.leffler.engine.asset.SpriteSheet;
 import se.fredin.leffler.engine.constants.Heading;
-import se.fredin.leffler.engine.display.Camera;
+import se.fredin.leffler.engine.geometry.Camera;
+import se.fredin.leffler.engine.geometry.Vector2f;
 import se.fredin.leffler.engine.io.Controller;
 import se.fredin.leffler.engine.map.TileMap;
 import se.fredin.leffler.engine.object.Player;
@@ -30,10 +31,9 @@ public class TileMapGame implements GameBase {
     @Override
     public Player getPlayer() {
         return new Player(
-                24,
-                24,
-                16 * SCALE,
-                16 * SCALE,
+                new Vector2f(24, 24),
+                16,
+                16,
                 6f,
                 this.controller,
                 new SpriteSheet(

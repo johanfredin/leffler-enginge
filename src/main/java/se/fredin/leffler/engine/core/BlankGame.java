@@ -2,8 +2,8 @@ package se.fredin.leffler.engine.core;
 
 import se.fredin.leffler.engine.asset.SpriteSheet;
 import se.fredin.leffler.engine.constants.Heading;
-import se.fredin.leffler.engine.display.Camera;
 import se.fredin.leffler.engine.display.StillCamera;
+import se.fredin.leffler.engine.geometry.Vector2f;
 import se.fredin.leffler.engine.io.Controller;
 import se.fredin.leffler.engine.object.Block;
 import se.fredin.leffler.engine.object.Player;
@@ -25,8 +25,7 @@ public class BlankGame implements GameBase {
     @Override
     public Player getPlayer() {
         var p = new Player(
-                24,
-                24,
+                new Vector2f(24, 24),
                 16,
                 16,
                 6f,
@@ -54,5 +53,6 @@ public class BlankGame implements GameBase {
         player.draw(g2d);
         player.drawBounds(g2d, Color.RED);
         block.drawBounds(g2d, Color.BLUE);
+        g2d.drawString(player.position.toString() + "\nblock=" + block.position.toString(), 50, 30);
     }
 }

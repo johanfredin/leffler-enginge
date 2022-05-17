@@ -1,5 +1,7 @@
 package se.fredin.leffler.engine.display;
 
+import se.fredin.leffler.engine.geometry.Camera;
+
 public class StillCamera extends Camera {
 
     public StillCamera() {
