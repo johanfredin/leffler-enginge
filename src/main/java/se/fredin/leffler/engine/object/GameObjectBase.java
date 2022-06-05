@@ -28,10 +28,12 @@ public abstract class GameObjectBase implements Rendereable {
         this.h = h * GameBase.SCALE;
         this.speed = speed;
         this.bounds = new Rectangle2f(
-                position.x + clampX,
-                position.y + clampY,
-                (w - clampX) * GameBase.SCALE,
-                (h - clampY) * GameBase.SCALE
+                position.x,
+                position.y,
+                w * GameBase.SCALE,
+                h * GameBase.SCALE,
+                clampX,
+                clampY
         );
     }
 

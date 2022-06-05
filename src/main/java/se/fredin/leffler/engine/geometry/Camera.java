@@ -1,7 +1,6 @@
 package se.fredin.leffler.engine.geometry;
 
 import se.fredin.leffler.engine.core.Rendereable;
-import se.fredin.leffler.engine.geometry.Shape;
 import se.fredin.leffler.engine.object.GameObjectBase;
 
 import java.awt.*;
@@ -28,8 +27,8 @@ public class Camera extends Shape implements Rendereable {
     public void tick(float deltaTime) {
         if (objectOfInterest.isPresent()) {
             var obj = objectOfInterest.get();
-            this.x = obj.position.x - (float)(viewPortWidth >> 1);
-            this.y = obj.position.y - (float)(viewPortHeight >> 1);
+            this.x = obj.position.x - (float) (viewPortWidth >> 1);
+            this.y = obj.position.y - (float) (viewPortHeight >> 1);
 
             // Handle clamping
             if (x <= 0) {

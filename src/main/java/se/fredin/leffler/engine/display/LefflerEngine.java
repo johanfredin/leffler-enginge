@@ -105,7 +105,7 @@ public abstract class LefflerEngine extends JFrame implements Runnable {
 
     public void draw() {
         var bufferStrategy = canvas.getBufferStrategy();
-        Graphics2D g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
+        var g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
         g2d.setColor(bgColor);
         g2d.fillRect(0, 0, width, height);
 

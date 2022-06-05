@@ -12,17 +12,20 @@ import java.awt.*;
 public class Player extends GameObjectBase {
 
     private final Controller ctrl;
-    private Camera camera;
-    private byte heading = Heading.UP;
+    private final Animator animator;
 
-    final float ticksPerFrame;
-    final Animator animator;
+    private Camera camera;
 
     public Player(Vector2f position, int w, int h, float speed, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame) {
-        super(position, w, h, speed, 2, 2);
+        this(position, w, h, speed, ctrl, spriteSheet, ticksPerFrame, null);
+    }
+
+    public Player(Vector2f position, int w, int h, float speed, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame, Camera camera) {
+        super(position, w, h, speed, 0, 0);
         this.ctrl = ctrl;
-        this.ticksPerFrame = ticksPerFrame;
         this.animator = new Animator(spriteSheet, ticksPerFrame);
+        this.camera = camera;
+        this.heading = Heading.DOWN;
     }
 
     public void setCamera(Camera camera) {
@@ -51,7 +54,7 @@ public class Player extends GameObjectBase {
                 currSpeedX = speed;
             }
             position.add(currSpeedX, currSpeedY);
-            bounds.move(position);
+            bounds.tick(position);
             animator.tick();
         }
     }
