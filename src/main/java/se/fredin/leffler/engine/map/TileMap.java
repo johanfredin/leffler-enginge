@@ -1,11 +1,15 @@
 package se.fredin.leffler.engine.map;
 
+import se.fredin.leffler.engine.core.CollisionHandler;
 import se.fredin.leffler.engine.geometry.Camera;
+import se.fredin.leffler.engine.geometry.Rectangle2f;
+import se.fredin.leffler.engine.object.Player;
 import se.fredin.leffler.engine.util.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,17 +18,19 @@ public class TileMap extends LefflerMap {
     private int[][] tilesIndex;
     private BufferedImage[] tileImages;
     private Camera camera;
-
+    private final List<Rectangle2f> bounds;
     private final int nCols, nRows;
-
     private final int scaledTileSize;
+    private final CollisionHandler ch;
 
     public TileMap(String levelFileName, Map<Integer, String> tileset, int nCols, int nRows, byte scale, byte tileSize) {
         super((tileSize * nCols) * scale, (tileSize * nRows) * scale, scale, levelFileName);
         this.scaledTileSize = tileSize * scale;
         this.nCols = nCols;
         this.nRows = nRows;
+        this.bounds = getBounds();
         initTiles(levelFileName, tileset);
+        this.ch = new CollisionHandler();
     }
 
     public void setCamera(Camera camera) {
@@ -56,12 +62,13 @@ public class TileMap extends LefflerMap {
         }
     }
 
-    @Override
-    public void tick(float deltaTime) {
-        // Not needed here
+    boolean collision;
+
+    public void tick(float deltaTime, Player player) {
+        player.tick(deltaTime);
+        ch.handleCollision(player, bounds);
     }
 
-    @Override
     public void draw(Graphics2D g2d) {
         for (int y = 0; y < nRows; y++) {
             for (int x = 0; x < nCols; x++) {
@@ -70,6 +77,14 @@ public class TileMap extends LefflerMap {
                 g2d.drawImage(tileImages[tilesIndex[y][x]], camX, camY, scaledTileSize, scaledTileSize, null);
             }
         }
+        g2d.setColor(collision ? Color.WHITE : Color.RED);
     }
 
+    @Override
+    protected List<Rectangle2f> getBounds() {
+        return List.of(
+                new Rectangle2f(4 * scaledTileSize, 4 * scaledTileSize, 80 * scale, 48 * scale),
+                new Rectangle2f(20 * scaledTileSize, 4 * scaledTileSize, 80 * scale, 48 * scale)
+        );
+    }
 }

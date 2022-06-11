@@ -34,7 +34,7 @@ public class TileMapGame implements GameBase {
                 new Vector2f(24, 24),
                 16,
                 16,
-                6f,
+                12f,
                 this.controller,
                 new SpriteSheet(
                         (byte) 3,
@@ -50,7 +50,7 @@ public class TileMapGame implements GameBase {
     @Override
     public void tick(float deltaTime) {
         camera.tick(deltaTime);
-        player.tick(deltaTime);
+        tileMap.tick(deltaTime, player);
     }
 
     @Override

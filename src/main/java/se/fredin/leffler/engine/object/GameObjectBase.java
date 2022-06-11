@@ -18,11 +18,7 @@ public abstract class GameObjectBase implements Rendereable {
 
     public final Rectangle2f bounds;
 
-    public GameObjectBase(float x, float y, int w, int h, float speed) {
-        this(new Vector2f(x, y), w, h, speed, 0, 0);
-    }
-
-    public GameObjectBase(Vector2f position, int w, int h, float speed, int clampX, int clampY) {
+    public GameObjectBase(Vector2f position, int w, int h, float speed) {
         this.position = position;
         this.w = w * GameBase.SCALE;
         this.h = h * GameBase.SCALE;
@@ -31,9 +27,7 @@ public abstract class GameObjectBase implements Rendereable {
                 position.x,
                 position.y,
                 w * GameBase.SCALE,
-                h * GameBase.SCALE,
-                clampX,
-                clampY
+                h * GameBase.SCALE
         );
     }
 

@@ -1,7 +1,7 @@
 package se.fredin.leffler.examples;
 
 import se.fredin.leffler.engine.constants.Mode;
-import se.fredin.leffler.engine.core.BlankGame;
+import se.fredin.leffler.engine.core.AABBGame;
 import se.fredin.leffler.engine.core.GameBase;
 import se.fredin.leffler.engine.display.LefflerEngine;
 import se.fredin.leffler.engine.io.Controller;
@@ -16,7 +16,7 @@ public class AABBEx extends LefflerEngine {
 
     @Override
     public GameBase getGame() {
-        return new BlankGame(controller);
+        return new AABBGame(controller);
     }
 
     @Override

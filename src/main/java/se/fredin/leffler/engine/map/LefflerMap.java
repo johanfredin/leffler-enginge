@@ -1,8 +1,10 @@
 package se.fredin.leffler.engine.map;
 
-import se.fredin.leffler.engine.core.Rendereable;
+import se.fredin.leffler.engine.geometry.Rectangle2f;
 
-public abstract class LefflerMap implements Rendereable {
+import java.util.List;
+
+public abstract class LefflerMap {
 
     public final int w, h, scale;
     protected final String levelFileName;
@@ -13,5 +15,7 @@ public abstract class LefflerMap implements Rendereable {
         this.scale = scale;
         this.levelFileName = levelFileName;
     }
+
+    protected abstract List<Rectangle2f> getBounds();
 
 }
