@@ -64,9 +64,13 @@ public abstract class LefflerEngine extends JFrame implements Runnable {
 
     public abstract GameBase getGame();
 
-    public abstract Controller getController();
+    public Controller getController() {
+        return new Controller();
+    }
 
-    public abstract int getNumBuffers();
+    public int getNumBuffers() {
+        return 2;
+    }
 
     public void start() {
         Thread gameThread = new Thread(this);

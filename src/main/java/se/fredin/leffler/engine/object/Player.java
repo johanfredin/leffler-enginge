@@ -18,6 +18,14 @@ public class Player extends GameObjectBase {
 
     private Camera camera;
 
+    public Player(Vector2f position, int w, int h, float speed, Controller ctrl) {
+        super(position, w, h, speed);
+        this.ctrl = ctrl;
+        this.animator = null;
+        this.heading = Heading.DOWN;
+        this.oldPos = new Vector2f(position);
+    }
+
     public Player(Vector2f position, int w, int h, float speed, Controller ctrl, SpriteSheet spriteSheet, float ticksPerFrame) {
         this(position, w, h, speed, ctrl, spriteSheet, ticksPerFrame, null);
     }
@@ -57,7 +65,9 @@ public class Player extends GameObjectBase {
                 heading = Heading.RIGHT;
                 currSpeedX = speed;
             }
-            animator.tick();
+            if (animator != null) {
+                animator.tick();
+            }
         }
         position.add(currSpeedX, currSpeedY);
         bounds.adjustTo(position);
@@ -65,7 +75,9 @@ public class Player extends GameObjectBase {
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawImage(animator.getCurrentFrame(heading), position.intX() - camera.intX(), position.intY() - camera.intY(), w, h, null);
+        if (animator != null) {
+            g2d.drawImage(animator.getCurrentFrame(heading), position.intX() - camera.intX(), position.intY() - camera.intY(), w, h, null);
+        }
         g2d.drawString("Player pos=" + position.toString(), 30, 30);
     }
 
