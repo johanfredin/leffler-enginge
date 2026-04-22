@@ -153,6 +153,17 @@ void render_color_buffer(void) {
     SDL_RenderPresent(renderer);
 }
 
+void draw_circle(int cx, int cy, int radius, uint32_t *color) {
+    for (int x = -radius; x <= radius; x++) {
+        for (int y = -radius; y <= radius; y++) {
+            if (((x * x) + (y * y)) <= (radius * radius)) {
+                draw_pixel(cx + x, cy + y, *color);
+            }
+        }
+    }
+
+}
+
 void clear_color_buffer(uint32_t color) {
     SDL_RenderClear(renderer);
     for (int i = 0; i < (window_width * window_height); i++) {

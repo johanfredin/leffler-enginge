@@ -26,6 +26,7 @@ void draw_grid(void);
 void draw_pixel(int x, int y, uint32_t color);
 void draw_line(int x0, int y0, int x1, int y1, uint32_t color);
 void draw_rect(int x, int y, int width, int height, uint32_t color);
+void draw_circle(int cx, int cy, int radius, uint32_t *color);
 void render_color_buffer(void);
 void render_text_area(int fov_factor);
 void clear_color_buffer(uint32_t color);
