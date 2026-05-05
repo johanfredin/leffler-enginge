@@ -34,11 +34,14 @@ int get_window_height(void) {
     return window_height;
 }
 
-bool initialize_window() {
+bool display_init(const int w, const int h) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         fprintf(stderr, "Error initializing SDL.\n");
         return false;
     }
+
+    window_width = w;
+    window_height = h;
 
     int fullscreen_w = window_width;
     int fullscreen_h = window_height;
@@ -91,7 +94,7 @@ bool initialize_window() {
     return true;
 }
 
-void draw_grid(void) {
+void display_draw_grid(void) {
     for (int y = 0; y < window_height; y += 10) {
         for (int x = 0; x < window_width; x += 10) {
             color_buffer[(window_width * y) + x] = 0xFF444444;
@@ -142,7 +145,7 @@ void draw_rect(int x, int y, int width, int height, uint32_t color) {
     }
 }
 
-void render_color_buffer(void) {
+void display_render_color_buffer(void) {
     SDL_UpdateTexture(
         color_buffer_texture,
         NULL,
@@ -153,7 +156,7 @@ void render_color_buffer(void) {
     SDL_RenderPresent(renderer);
 }
 
-void draw_circle(int cx, int cy, int radius, uint32_t *color) {
+void display_draw_circle(int cx, int cy, int radius, uint32_t *color) {
     for (int x = -radius; x <= radius; x++) {
         for (int y = -radius; y <= radius; y++) {
             if (((x * x) + (y * y)) <= (radius * radius)) {
@@ -224,7 +227,7 @@ bool is_show_textures(void) {
 
 float get_zbuffer_at(int x, int y) {
     if (x < 0 || x >= window_width || y < 0 || y >= window_height) {
-        return 1.0;
+        return 1.0f;
     }
     return z_buffer[(window_width * y) + x];
 }
@@ -236,7 +239,7 @@ void set_zbuffer_at(int x, int y, float value) {
     z_buffer[(window_width * y) + x] = value;
 }
 
-void destroy_window(void) {
+void display_destroy(void) {
     free(color_buffer);
     free(z_buffer);
     SDL_DestroyRenderer(renderer);

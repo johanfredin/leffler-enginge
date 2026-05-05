@@ -9,6 +9,9 @@
 #define RADIUS 32
 #define VEL 5
 
+#define W 640
+#define H 480
+
 static bool is_running = false;
 static uint32_t previous_frame_time = 0;
 static float delta_time = 0;
@@ -16,7 +19,7 @@ static vec2_t pos = {};
 static uint32_t color = 0x42A08000;
 
 void setup(void) {
-    is_running = initialize_window();
+    is_running = display_init(W, H);
     pos = (vec2_t){120, 140};
 }
 
@@ -54,9 +57,9 @@ void update(void) {
 
 void render(void) {
     clear_color_buffer(0xFF000000);
-    draw_grid();
-    draw_circle(pos.x, pos.y, RADIUS, &color);
-    render_color_buffer();
+    display_draw_grid();
+    display_draw_circle(pos.x, pos.y, RADIUS, &color);
+    display_render_color_buffer();
 }
 
 int main(void) {
@@ -66,7 +69,7 @@ int main(void) {
         update();
         render();
     }
-    destroy_window();
+    display_destroy();
 
     return 0;
 }
