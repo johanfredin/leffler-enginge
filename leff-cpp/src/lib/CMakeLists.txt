@@ -1,6 +1,9 @@
 add_library(leffler_engine STATIC
-    LefflerApp.cpp
-    LefflerApp.h
+        Application.cpp
+        Application.h
+        log.h
+        Input.cpp
+        Input.h
 )
 
 target_include_directories(leffler_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
