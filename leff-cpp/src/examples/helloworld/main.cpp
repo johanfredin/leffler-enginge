@@ -1,19 +1,21 @@
 #define NDEBUG
 #include "Application.h"
-#include "log.h"
-//
-// Created by johan on 2026-05-07.
-//
+
 
 class MyApp: public leffler::Application {
 public:
     using Application::Application;
 
-    void render() override {
-        log_debug("");
+    void init() override {
+        SDL_SetRenderScale(m_renderer, 4.0f, 4.0f);
     }
 
+    void render() override {
+        SDL_SetRenderDrawColor(m_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderDebugText(m_renderer, 60, 60, "Hello World");
+    }
     void tick() override {
+        // Nothing needed
     }
 };
 

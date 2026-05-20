@@ -34,20 +34,19 @@ namespace leffler {
         );
 
         virtual void start();
-
+        virtual void init() = 0;
         virtual void tick() = 0;
-
         virtual void render() = 0;
 
+        Input m_input;
     protected:
         SDL_Window *m_window;
         SDL_Renderer *m_renderer;
         Color m_clear_color;
-    private:
-        virtual void destroy();
-        Input m_input;
         const int m_window_width;
         const int m_window_height;
+    private:
+        virtual void destroy();
         bool m_fullscreen;
         bool m_running;
     };

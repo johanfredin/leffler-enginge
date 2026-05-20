@@ -8,7 +8,12 @@
 #include "log.h"
 
 namespace leffler {
-    Input::Input(): m_up(0), m_down(0), m_left(0), m_right(0), m_quit(0) {}
+    Input::Input() : m_up(0),
+                     m_down(0),
+                     m_left(0),
+                     m_right(0),
+                     m_quit(0) {
+    }
 
     void Input::handle() {
         SDL_Event event;

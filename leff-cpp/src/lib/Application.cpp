@@ -76,11 +76,11 @@ namespace leffler {
         // Init window and renderer
         m_window = create_window(title, m_window_width, m_window_height, fullscreen);
         m_renderer = create_renderer(m_window);
-
         m_running = true;
     }
 
     void Application::start()  {
+        init();
         while (m_running && !m_input.m_quit) {
             m_input.handle();
             tick();
