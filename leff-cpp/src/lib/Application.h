@@ -38,13 +38,13 @@ namespace leffler {
         virtual void tick() = 0;
         virtual void render() = 0;
 
-        Input m_input;
     protected:
         SDL_Window *m_window;
         SDL_Renderer *m_renderer;
         Color m_clear_color;
         const int m_window_width;
         const int m_window_height;
+        Input m_input{};
     private:
         virtual void destroy();
         bool m_fullscreen;

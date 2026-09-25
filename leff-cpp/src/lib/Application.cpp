@@ -8,8 +8,8 @@
 
 namespace leffler {
 
-    static Uint64 delta_time = 0;
-    static Uint64 previous_frame_time = 0;
+    static uint64_t delta_time = 0;
+    static uint64_t previous_frame_time = 0;
 
     static void init_subsystem() {
         if (SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS)) {
@@ -21,7 +21,7 @@ namespace leffler {
     }
 
     static SDL_Window *create_window(const std::string &title, const int width, const int height, const bool fullscreen) {
-        Uint64 flags = SDL_WINDOW_RESIZABLE;
+        uint64_t flags = SDL_WINDOW_RESIZABLE;
         if (fullscreen) {
             flags |= SDL_WINDOW_FULLSCREEN;
         }
@@ -42,6 +42,7 @@ namespace leffler {
             log_err("Could not initialize renderer. Error: %s", SDL_GetError());
             exit(1);
         }
+        log_info("Renderer initialized=%s", SDL_GetRendererName(renderer));
         return renderer;
     }
 
@@ -49,7 +50,7 @@ namespace leffler {
         // Wait some time until the reach the target frame time in milliseconds
 
         // Only delay execution if we are running too fast
-        if (const Uint64 time_to_wait = FPS - (SDL_GetTicks() - previous_frame_time); time_to_wait > 0 && time_to_wait <= FPS) {
+        if (const uint64_t time_to_wait = FPS - (SDL_GetTicks() - previous_frame_time); time_to_wait > 0 && time_to_wait <= FPS) {
             SDL_Delay(time_to_wait);
         }
 
@@ -79,7 +80,7 @@ namespace leffler {
         m_running = true;
     }
 
-    void Application::start()  {
+    void Application::start() {
         init();
         while (m_running && !m_input.m_quit) {
             m_input.handle();

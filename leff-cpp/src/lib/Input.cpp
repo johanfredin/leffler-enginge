@@ -8,13 +8,6 @@
 #include "log.h"
 
 namespace leffler {
-    Input::Input() : m_up(0),
-                     m_down(0),
-                     m_left(0),
-                     m_right(0),
-                     m_quit(0) {
-    }
-
     void Input::handle() {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
@@ -45,15 +38,19 @@ namespace leffler {
                         m_quit = 1;
                     }
                     if (event.key.key == SDLK_UP) {
+                        log_debug("UP key released");
                         m_up = 0;
                     }
                     if (event.key.key == SDLK_DOWN) {
+                        log_debug("DOWN key released");
                         m_down = 0;
                     }
                     if (event.key.key == SDLK_LEFT) {
+                        log_debug("LEFT key released");
                         m_left = 0;
                     }
                     if (event.key.key == SDLK_RIGHT) {
+                        log_debug("RIGHT key released");
                         m_right = 0;
                     }
                     break;

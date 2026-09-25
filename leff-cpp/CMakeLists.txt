@@ -10,3 +10,5 @@ find_package(SDL3 REQUIRED)
 
 add_subdirectory(src/lib)
 add_subdirectory(src/examples/helloworld)
+add_subdirectory(src/examples/circle_vs_rect_collision)
+add_subdirectory(src/examples/tile_based_collision)

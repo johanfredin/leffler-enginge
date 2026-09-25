@@ -164,7 +164,6 @@ void display_draw_circle(int cx, int cy, int radius, uint32_t *color) {
             }
         }
     }
-
 }
 
 void clear_color_buffer(uint32_t color) {

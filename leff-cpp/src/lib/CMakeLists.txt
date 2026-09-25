@@ -4,6 +4,10 @@ add_library(leffler_engine STATIC
         log.h
         Input.cpp
         Input.h
+        Geom.h
+        Shape.cpp
+        Shape.h
+        Geom.cpp
 )
 
 target_include_directories(leffler_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

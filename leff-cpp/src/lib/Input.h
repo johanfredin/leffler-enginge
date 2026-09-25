@@ -9,7 +9,6 @@
 namespace leffler {
     class Input {
     public:
-        Input();
         uint8_t m_up: 1;
         uint8_t m_down: 1;
         uint8_t m_left: 1;
