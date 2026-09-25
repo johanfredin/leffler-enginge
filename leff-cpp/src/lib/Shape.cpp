@@ -6,7 +6,7 @@
 
 namespace leffler {
 
-    static inline void set_color(SDL_Renderer *renderer, const Color &color) {
+    static void set_color(SDL_Renderer *renderer, const Color &color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     }
 
@@ -30,6 +30,7 @@ namespace leffler {
 
     void Rect::draw(SDL_Renderer *renderer) {
         set_color(renderer, color);
+        rect = {.x = pos.x, .y = pos.y, .w = w, .h = h};
         SDL_RenderFillRect(renderer, &rect);
     }
 

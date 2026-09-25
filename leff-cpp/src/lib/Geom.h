@@ -12,11 +12,10 @@ namespace leffler {
         Vec2();
         Vec2(float x, float y);
 
-        Vec2 operator+=(Vec2 const& other) const {
-            Vec2 result{};
-            result.x += other.x;
-            result.y += other.y;
-            return result;
+        Vec2 operator+=(Vec2 const& other) {
+            x += other.x;
+            y += other.y;
+            return *this;
         }
         Vec2 operator-=(Vec2 const& other) const {
             Vec2 result{};

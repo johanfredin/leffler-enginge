@@ -36,10 +36,16 @@ namespace leffler {
         return window;
     };
 
-    static SDL_Renderer *create_renderer(SDL_Window *window) {
+    static SDL_Renderer *create_renderer(SDL_Window *window, const int width, const int height) {
         SDL_Renderer *renderer = SDL_CreateRenderer(window, nullptr);
         if (!renderer) {
             log_err("Could not initialize renderer. Error: %s", SDL_GetError());
+            exit(1);
+        }
+        // Render at a fixed logical resolution and let SDL scale it to the window size
+        SDL_SetRenderLogicalPresentation(renderer, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+        if (!SDL_SetRenderVSync(renderer, SDL_RENDERER_VSYNC_ADAPTIVE)) {
+            log_err("Could not enable vsync. Error: %s", SDL_GetError());
             exit(1);
         }
         log_info("Renderer initialized=%s", SDL_GetRendererName(renderer));
@@ -76,7 +82,7 @@ namespace leffler {
 
         // Init window and renderer
         m_window = create_window(title, m_window_width, m_window_height, fullscreen);
-        m_renderer = create_renderer(m_window);
+        m_renderer = create_renderer(m_window, m_window_width, m_window_height);
         m_running = true;
     }
 
