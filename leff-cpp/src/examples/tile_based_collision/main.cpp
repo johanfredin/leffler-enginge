@@ -5,8 +5,8 @@
 
 namespace {
     class MyApp : public leffler::Application {
-        static constexpr float VELOCITY = .66f;
-        static constexpr Uint8 TILE_SIZE = 1;
+        static constexpr float VELOCITY = 2.66f;
+        static constexpr Uint8 TILE_SIZE = 16;
 
         struct Player {
             leffler::Vec2 vel;
@@ -23,15 +23,47 @@ namespace {
             }
         };
 
+        const std::string m_str_map = "00000000\n"
+                "10000001\n"
+                "10000001\n"
+                "00011000\n"
+                "00011000\n"
+                "00000000\n"
+                "11110011\n"
+                "00000011\n";
+
+        std::vector<leffler::Rect> m_map;
+
     public:
         using Application::Application;
 
         void init() override {
-            SDL_SetRenderScale(m_renderer, 8.0, 8.0);
+            size_t cols = 0;
+            size_t rows = 0;
+            for (const char c: m_str_map) {
+                if (c == '1') {
+                    leffler::Rect collision_tile{
+                        {
+                            static_cast<float>(cols * TILE_SIZE),
+                            static_cast<float>(rows * TILE_SIZE),
+                        },
+                        TILE_SIZE, TILE_SIZE, {0xFF, 0, 0}
+                    };
+                    m_map.push_back(collision_tile);
+                } else if (c == '\n') {
+                    rows += 1;
+                    cols = 0;
+                } else {
+                    cols += 1;
+                }
+            }
         }
 
         void render() override {
             m_player.bounds.draw(m_renderer);
+            for (leffler::Rect collision_tile: m_map) {
+                collision_tile.draw(m_renderer);
+            }
         }
 
         void tick() override {
@@ -55,6 +87,6 @@ namespace {
 }
 
 int main() {
-    MyApp app("Circle VS Rect Collision", 320, 240, false, {128, 50, 35});
+    MyApp app("Circle VS Rect Collision", 320, 240, false, {0, 0, 0x55});
     app.start();
 }

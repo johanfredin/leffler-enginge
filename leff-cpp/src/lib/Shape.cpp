@@ -13,6 +13,10 @@ namespace leffler {
     Shape::Shape(const Vec2 pos, const Color color) : pos(pos), color(color) {
     }
 
+    Rect::Rect() : Shape({0.0f, 0.0f}, {0, 0, 0}) {
+        this->rect = {.x = 0, .y = 0, .w = 0, .h = 0};
+    }
+
     Rect::Rect(const Vec2 pos, const float w, const float h, const Color color) : Shape(pos, color), w(w), h(h) {
         this->rect = {.x = pos.x, .y = pos.y, .w = w, .h = h};
     }

@@ -25,8 +25,9 @@ namespace leffler {
 
     class Rect : public Shape {
     public:
+        Rect();
         explicit Rect(Vec2 pos, float w, float h, Color color);
-        float w, h;
+        float w{}, h{};
         void draw(SDL_Renderer *renderer) override;
     private:
         SDL_FRect rect{};
